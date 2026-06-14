@@ -53,7 +53,13 @@
 </head>
 <body>
   <div class="container">
-    <button class="close-btn" onclick="window.close()">×</button>
+    <button class="close-btn" id="close-btn">×</button>
+    <script>
+      document.getElementById('close-btn').addEventListener('click', () => {
+        window.__TAURI__?.core?.invoke('plugin:core|window_close')
+          .catch(() => window.close());
+      });
+    </script>
     <div class="header">
       <div class="icon">♫</div>
       <h2>AirPlay3</h2>
