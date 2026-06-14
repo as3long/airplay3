@@ -241,7 +241,7 @@ function selectPreset(p: typeof presets[0]) {
   align-items: center;
 }
 
-.preset-wrapper {
+.eq-preset-wrapper {
   position: relative;
 }
 
