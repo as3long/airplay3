@@ -56,7 +56,7 @@ async function openAboutWindow() {
     return
   }
   new WebviewWindow('about', {
-    url: '#/about',
+    url: 'about.html',
     title: 'About AirPlay3',
     width: 440,
     height: 520,
