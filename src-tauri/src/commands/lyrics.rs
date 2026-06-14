@@ -15,7 +15,9 @@ fn get_lyrics_cache_dir() -> Result<PathBuf, String> {
 
 fn cache_key(artist: &str, title: &str) -> String {
     let raw = format!("{} - {}", artist.to_lowercase(), title.to_lowercase());
-    let hash: u32 = raw.bytes().fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
+    let hash: u32 = raw
+        .bytes()
+        .fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
     format!("{:08x}", hash)
 }
 
@@ -61,11 +63,7 @@ pub async fn fetch_lyrics(
     Ok(result)
 }
 
-async fn fetch_from_api(
-    artist: &str,
-    title: &str,
-    duration: f64,
-) -> Result<LyricsResult, String> {
+async fn fetch_from_api(artist: &str, title: &str, duration: f64) -> Result<LyricsResult, String> {
     let client = reqwest::Client::new();
     let is_unknown = artist.eq_ignore_ascii_case("Unknown Artist");
 
@@ -149,7 +147,13 @@ fn find_best_match<'a>(
             let title_match = r
                 .track_name
                 .as_ref()
-                .map(|t| if t.to_lowercase().contains(&title_lower) { 0 } else { 100 })
+                .map(|t| {
+                    if t.to_lowercase().contains(&title_lower) {
+                        0
+                    } else {
+                        100
+                    }
+                })
                 .unwrap_or(50);
             let duration_diff = r
                 .duration

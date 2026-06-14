@@ -67,13 +67,19 @@ pub async fn fetch_hot_songs(page: u32) -> Result<Vec<HotSong>, String> {
 
     let resp = client
         .get(&url)
-        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        .header(
+            "User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        )
         .timeout(std::time::Duration::from_secs(15))
         .send()
         .await
         .map_err(|e| format!("Network error: {}", e))?;
 
-    let html = resp.text().await.map_err(|e| format!("Read error: {}", e))?;
+    let html = resp
+        .text()
+        .await
+        .map_err(|e| format!("Read error: {}", e))?;
 
     let mut songs = Vec::new();
     let re_play = regex::Regex::new(r#"href="/play/(\d+)"[^>]*>\s*([^<]*)"#).unwrap();
@@ -95,12 +101,18 @@ pub async fn fetch_hot_songs(page: u32) -> Result<Vec<HotSong>, String> {
     for song in &mut songs {
         if let Ok(info) = fetch_song_info(&song.id).await {
             song.artist = info.0;
-            song.title = if song.title.is_empty() { info.1 } else { song.title.clone() };
+            song.title = if song.title.is_empty() {
+                info.1
+            } else {
+                song.title.clone()
+            };
             song.play_id = info.2;
         }
         if let Ok(cache_dir) = get_cache_dir() {
-            let safe_name = format!("{}-{}", song.title, song.artist)
-                .replace(|c: char| !c.is_alphanumeric() && c != ' ' && c != '-' && c != '_', "_");
+            let safe_name = format!("{}-{}", song.title, song.artist).replace(
+                |c: char| !c.is_alphanumeric() && c != ' ' && c != '-' && c != '_',
+                "_",
+            );
             song.cached = cache_dir.join(format!("{}.mp3", safe_name)).exists();
         }
     }
@@ -124,15 +136,24 @@ async fn fetch_song_info(id: &str) -> Result<(String, String, String), String> {
     let client = reqwest::Client::new();
     let resp = client
         .get(format!("https://www.gequhai.com/play/{}", id))
-        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        .header(
+            "User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        )
         .timeout(std::time::Duration::from_secs(10))
         .send()
         .await
         .map_err(|e| format!("Network error: {}", e))?;
 
-    let html = resp.text().await.map_err(|e| format!("Read error: {}", e))?;
+    let html = resp
+        .text()
+        .await
+        .map_err(|e| format!("Read error: {}", e))?;
 
-    let re = regex::Regex::new(r#"window\.appData\s*=\s*\{[^}]*"mp3_title":"([^"]*)"[^}]*"mp3_author":"([^"]*)""#).unwrap();
+    let re = regex::Regex::new(
+        r#"window\.appData\s*=\s*\{[^}]*"mp3_title":"([^"]*)"[^}]*"mp3_author":"([^"]*)""#,
+    )
+    .unwrap();
     let (artist, title) = if let Some(cap) = re.captures(&html) {
         (cap[2].to_string(), cap[1].to_string())
     } else {
@@ -150,10 +171,16 @@ async fn fetch_song_info(id: &str) -> Result<(String, String, String), String> {
 }
 
 #[tauri::command]
-pub async fn download_song(song_id: String, title: String, artist: String) -> Result<String, String> {
+pub async fn download_song(
+    song_id: String,
+    title: String,
+    artist: String,
+) -> Result<String, String> {
     let cache_dir = get_cache_dir()?;
-    let safe_name = format!("{}-{}", title, artist)
-        .replace(|c: char| !c.is_alphanumeric() && c != ' ' && c != '-' && c != '_', "_");
+    let safe_name = format!("{}-{}", title, artist).replace(
+        |c: char| !c.is_alphanumeric() && c != ' ' && c != '-' && c != '_',
+        "_",
+    );
     let file_path = cache_dir.join(format!("{}.mp3", safe_name));
 
     if file_path.exists() {
@@ -164,13 +191,19 @@ pub async fn download_song(song_id: String, title: String, artist: String) -> Re
 
     let page_resp = client
         .get(format!("https://www.gequhai.com/play/{}", song_id))
-        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        .header(
+            "User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        )
         .timeout(std::time::Duration::from_secs(10))
         .send()
         .await
         .map_err(|e| format!("Page error: {}", e))?;
 
-    let html = page_resp.text().await.map_err(|e| format!("Read error: {}", e))?;
+    let html = page_resp
+        .text()
+        .await
+        .map_err(|e| format!("Read error: {}", e))?;
 
     let re = regex::Regex::new(r#"play_id\s*=\s*'([^']+)'"#).unwrap();
     let play_id = re
@@ -181,10 +214,16 @@ pub async fn download_song(song_id: String, title: String, artist: String) -> Re
 
     let api_resp = client
         .post("https://www.gequhai.com/api/music")
-        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        .header(
+            "User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        )
         .header("X-Requested-With", "XMLHttpRequest")
         .header("X-Custom-Header", "SecretKey")
-        .header("Referer", format!("https://www.gequhai.com/play/{}", song_id))
+        .header(
+            "Referer",
+            format!("https://www.gequhai.com/play/{}", song_id),
+        )
         .header("Origin", "https://www.gequhai.com")
         .form(&[("id", play_id), ("type", "0")])
         .timeout(std::time::Duration::from_secs(15))
@@ -192,7 +231,10 @@ pub async fn download_song(song_id: String, title: String, artist: String) -> Re
         .await
         .map_err(|e| format!("API error: {}", e))?;
 
-    let json: serde_json::Value = api_resp.json().await.map_err(|e| format!("Parse error: {}", e))?;
+    let json: serde_json::Value = api_resp
+        .json()
+        .await
+        .map_err(|e| format!("Parse error: {}", e))?;
 
     let audio_url = json
         .get("data")
@@ -200,7 +242,10 @@ pub async fn download_song(song_id: String, title: String, artist: String) -> Re
         .and_then(|u| u.as_str())
         .filter(|u| !u.is_empty())
         .ok_or_else(|| {
-            let msg = json.get("msg").and_then(|m| m.as_str()).unwrap_or("No audio URL");
+            let msg = json
+                .get("msg")
+                .and_then(|m| m.as_str())
+                .unwrap_or("No audio URL");
             format!("API returned: {}", msg)
         })?;
 
@@ -212,7 +257,10 @@ pub async fn download_song(song_id: String, title: String, artist: String) -> Re
         .await
         .map_err(|e| format!("Download error: {}", e))?;
 
-    let bytes = audio_resp.bytes().await.map_err(|e| format!("Read error: {}", e))?;
+    let bytes = audio_resp
+        .bytes()
+        .await
+        .map_err(|e| format!("Read error: {}", e))?;
     fs::write(&file_path, &bytes).map_err(|e| format!("Write error: {}", e))?;
 
     Ok(file_path.to_string_lossy().to_string())

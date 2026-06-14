@@ -60,7 +60,10 @@ pub fn load_volume() -> Result<f64, String> {
         return Ok(1.0);
     }
     let content = fs::read_to_string(path).map_err(|e| e.to_string())?;
-    let volume: f64 = content.trim().parse().map_err(|e: std::num::ParseFloatError| e.to_string())?;
+    let volume: f64 = content
+        .trim()
+        .parse()
+        .map_err(|e: std::num::ParseFloatError| e.to_string())?;
     Ok(volume.clamp(0.0, 1.0))
 }
 
@@ -71,7 +74,8 @@ pub fn read_file_as_data_url(file_path: String) -> Result<String, String> {
         return Err(format!("File not found: {}", file_path));
     }
 
-    let ext = path.extension()
+    let ext = path
+        .extension()
         .and_then(|e| e.to_str())
         .unwrap_or("mp3")
         .to_lowercase();

@@ -16,8 +16,8 @@ pub fn read_audio_metadata(file_path: String) -> Result<AudioMetadata, String> {
         return Err(format!("File not found: {}", file_path));
     }
 
-    let tagged_file = lofty::read_from_path(path)
-        .map_err(|e| format!("Failed to read file: {}", e))?;
+    let tagged_file =
+        lofty::read_from_path(path).map_err(|e| format!("Failed to read file: {}", e))?;
 
     let duration = tagged_file.properties().duration().as_secs_f64();
 
