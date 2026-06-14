@@ -3,7 +3,6 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
 import { open } from '@tauri-apps/plugin-dialog'
 import { getCurrentWindow } from '@tauri-apps/api/window'
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow'
 import { usePlayerStore } from './stores/player'
 import { eventBus, EVENTS } from './utils/eventBus'
 import { useEqualizer } from './composables/useEqualizer'
@@ -49,33 +48,9 @@ function closeContextMenu() {
 
 async function openAboutWindow() {
   showContextMenu.value = false
-  const existing = await WebviewWindow.getByLabel('about')
-  if (existing) {
-    await existing.show()
-    await existing.setFocus()
-    return
-  }
   const isDev = location.hostname === 'localhost'
   const url = isDev ? 'http://localhost:5173/about.html' : 'about.html'
-  const win = new WebviewWindow('about', {
-    url,
-    title: 'About AirPlay3',
-    width: 440,
-    height: 500,
-    decorations: true,
-    center: true,
-    resizable: false,
-    minimizable: false,
-    maximizable: false,
-    visible: false,
-  })
-  await new Promise<void>((resolve) => {
-    win.once('tauri://ready', () => {
-      win.show()
-      resolve()
-    })
-    setTimeout(() => { win.show(); resolve() }, 2000)
-  })
+  window.open(url, 'about', 'width=440,height=500,resizable=no,menubar=no,toolbar=no')
 }
 
 async function openFilePicker() {
