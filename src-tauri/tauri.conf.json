@@ -18,14 +18,16 @@
         "height": 600,
         "decorations": false,
         "transparent": true,
-        "dragDropEnabled": true
+        "dragDropEnabled": true,
+        "url": "index.html"
       },
       {
         "label": "about",
         "title": "About AirPlay3",
         "width": 440,
         "height": 500,
-        "decorations": true,
+        "decorations": false,
+        "transparent": true,
         "visible": false,
         "center": true,
         "resizable": false,
