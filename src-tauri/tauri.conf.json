@@ -24,6 +24,7 @@
       {
         "label": "about",
         "title": "About AirPlay3",
+        "url": "/about.html",
         "width": 440,
         "height": 500,
         "decorations": false,
