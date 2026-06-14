@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 env:
   CARGO_TERM_COLOR: always
@@ -12,26 +12,28 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: pnpm
-
-      - name: Install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install frontend dependencies
         run: pnpm install
 
       - name: Run frontend tests
         run: pnpm test
+
+      - name: Run build check
+        run: pnpm build
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
