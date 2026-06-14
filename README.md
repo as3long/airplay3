@@ -2,6 +2,8 @@
 
 AirPlay 3 风格的 Windows 桌面音乐播放器。
 
+![Preview](preview.png)
+
 ## 技术栈
 
 - **Frontend**: Tauri 2 + Vue 3 + TypeScript + Vite + Pinia
