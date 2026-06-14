@@ -8,15 +8,28 @@ const pkgPath = path.join(root, 'package.json')
 const cargoPath = path.join(root, 'src-tauri', 'Cargo.toml')
 const tauriPath = path.join(root, 'src-tauri', 'tauri.conf.json')
 
+function getCurrentVersion() {
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+  return pkg.version
+}
+
+function bumpPatch(version) {
+  const parts = version.split('.')
+  parts[2] = String(parseInt(parts[2]) + 1)
+  return parts.join('.')
+}
+
 function getVersion() {
+  const current = getCurrentVersion()
   const arg = process.argv[2]
+
   if (!arg) {
-    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
-    console.log(`Current version: ${pkg.version}`)
-    console.log('Usage: node scripts/version.js <version>')
-    console.log('Example: node scripts/version.js 0.2.0')
-    process.exit(0)
+    const bumped = bumpPatch(current)
+    console.log(`Current: ${current}`)
+    console.log(`Bumping patch: ${bumped}`)
+    return bumped
   }
+
   if (!/^\d+\.\d+\.\d+/.test(arg)) {
     console.error('Invalid version format. Use: x.y.z')
     process.exit(1)
