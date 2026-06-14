@@ -57,7 +57,7 @@ async function openAboutWindow() {
   }
   const isDev = location.hostname === 'localhost'
   const url = isDev ? 'http://localhost:5173/about.html' : 'about.html'
-  new WebviewWindow('about', {
+  const win = new WebviewWindow('about', {
     url,
     title: 'About AirPlay3',
     width: 440,
@@ -67,6 +67,14 @@ async function openAboutWindow() {
     resizable: false,
     minimizable: false,
     maximizable: false,
+    visible: false,
+  })
+  await new Promise<void>((resolve) => {
+    win.once('tauri://ready', () => {
+      win.show()
+      resolve()
+    })
+    setTimeout(() => { win.show(); resolve() }, 2000)
   })
 }
 
