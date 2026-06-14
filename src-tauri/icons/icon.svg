@@ -1,42 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e"/>
-      <stop offset="100%" style="stop-color:#0f0f1a"/>
+      <stop offset="0%" stop-color="#1e1e32"/>
+      <stop offset="100%" stop-color="#12121e"/>
     </linearGradient>
-    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e86a2e"/>
-      <stop offset="100%" style="stop-color:#ff8c42"/>
+    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8c42"/>
+      <stop offset="100%" stop-color="#e86a2e"/>
     </linearGradient>
-    <linearGradient id="wave" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#e86a2e;stop-opacity:0.2"/>
-      <stop offset="50%" style="stop-color:#e86a2e;stop-opacity:0.8"/>
-      <stop offset="100%" style="stop-color:#ff8c42;stop-opacity:0.2"/>
-    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="circle-clip">
+      <circle cx="256" cy="256" r="236"/>
+    </clipPath>
   </defs>
 
-  <!-- Background circle -->
-  <circle cx="256" cy="256" r="240" fill="url(#bg)" stroke="#2a2a3e" stroke-width="8"/>
+  <!-- Background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#2a2a40" stroke-width="2"/>
 
-  <!-- Sound waves -->
-  <path d="M180 280 Q200 220 220 280 Q240 340 260 280 Q280 220 300 280" stroke="url(#wave)" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.5"/>
-  <path d="M160 300 Q190 230 220 300 Q250 370 280 300 Q310 230 340 300" stroke="url(#wave)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.3"/>
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="url(#orange)" stroke-width="2" opacity="0.3"/>
+  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#orange)" stroke-width="1" opacity="0.15"/>
 
-  <!-- Music note -->
-  <g transform="translate(256, 240)">
-    <!-- Note stem -->
-    <rect x="-4" y="-80" width="8" height="80" rx="4" fill="url(#accent)"/>
-    <!-- Note flag -->
-    <path d="M4 -80 Q40 -60 30 -30 Q20 -50 4 -50 Z" fill="url(#accent)"/>
-    <!-- Note head -->
-    <ellipse cx="-8" cy="0" rx="22" ry="16" fill="url(#accent)" transform="rotate(-20 -8 0)"/>
+  <g clip-path="url(#circle-clip)">
+    <!-- Sound wave decorations -->
+    <path d="M140 320 Q170 260 200 320 Q230 380 260 320 Q290 260 320 320 Q350 380 380 320" stroke="url(#orange)" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.12"/>
+    <path d="M120 340 Q160 270 200 340 Q240 410 280 340 Q320 270 360 340 Q400 410 440 340" stroke="url(#orange)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.08"/>
   </g>
 
-  <!-- Play triangle overlay -->
-  <g transform="translate(256, 240)" opacity="0.9">
-    <path d="M-15 -20 L-15 20 L20 0 Z" fill="white" opacity="0.9"/>
+  <!-- Music note group -->
+  <g filter="url(#glow)">
+    <!-- Note head (ellipse, rotated) -->
+    <ellipse cx="220" cy="300" rx="38" ry="28" fill="url(#orange)" transform="rotate(-25 220 300)"/>
+
+    <!-- Stem -->
+    <rect x="254" y="160" width="10" height="145" rx="5" fill="url(#orange)"/>
+
+    <!-- Flag -->
+    <path d="M264 160 Q320 185 310 230 Q300 200 264 195 Z" fill="url(#orange)"/>
   </g>
 
-  <!-- Inner ring accent -->
-  <circle cx="256" cy="256" r="200" fill="none" stroke="url(#accent)" stroke-width="3" opacity="0.3"/>
+  <!-- Play triangle (white) -->
+  <g opacity="0.92">
+    <polygon points="238,240 238,310 290,275" fill="white"/>
+  </g>
 </svg>
