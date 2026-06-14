@@ -38,11 +38,12 @@
       font-size: 13px; color: #e86a2e; margin-bottom: 8px;
       padding-bottom: 4px; border-bottom: 2px solid #e86a2e;
     }
-    .credits { flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+    .credits { max-height: 260px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
     .credits::-webkit-scrollbar { width: 5px; }
     .credits::-webkit-scrollbar-track { background: transparent; }
     .credits::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-    .item { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .item { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: background 0.15s; border-radius: 4px; padding-left: 8px; padding-right: 8px; }
+    .item:hover { background: rgba(255,255,255,0.06); }
     .item:last-child { border-bottom: none; }
     .name { display: flex; align-items: center; gap: 8px; }
     .name a { color: #e86a2e; text-decoration: none; font-size: 13px; font-weight: 500; }
@@ -56,8 +57,7 @@
     <button class="close-btn" id="close-btn">×</button>
     <script>
       document.getElementById('close-btn').addEventListener('click', () => {
-        window.__TAURI__?.core?.invoke('plugin:core|window_close')
-          .catch(() => window.close());
+        window.__TAURI_INTERNALS__?.invoke('plugin:window|close');
       });
     </script>
     <div class="header">
