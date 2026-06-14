@@ -3,15 +3,11 @@ defineEmits<{
   about: []
 }>()
 
-const props = defineProps<{
+defineProps<{
   visible: boolean
   x: number
   y: number
 }>()
-
-function close() {
-  // handled by parent
-}
 </script>
 
 <template>
