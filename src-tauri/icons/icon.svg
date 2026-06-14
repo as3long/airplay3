@@ -1,53 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e1e32"/>
-      <stop offset="100%" stop-color="#12121e"/>
-    </linearGradient>
-    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff8c42"/>
-      <stop offset="100%" stop-color="#e86a2e"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <clipPath id="circle-clip">
-      <circle cx="256" cy="256" r="236"/>
-    </clipPath>
-  </defs>
-
   <!-- Background -->
-  <circle cx="256" cy="256" r="240" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="240" fill="#1e1e32"/>
   <circle cx="256" cy="256" r="236" fill="none" stroke="#2a2a40" stroke-width="2"/>
 
-  <!-- Outer ring -->
-  <circle cx="256" cy="256" r="210" fill="none" stroke="url(#orange)" stroke-width="2" opacity="0.3"/>
-  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#orange)" stroke-width="1" opacity="0.15"/>
+  <!-- Rings -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#e86a2e" stroke-width="2" opacity="0.3"/>
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#e86a2e" stroke-width="1" opacity="0.15"/>
 
-  <g clip-path="url(#circle-clip)">
-    <!-- Sound wave decorations -->
-    <path d="M140 320 Q170 260 200 320 Q230 380 260 320 Q290 260 320 320 Q350 380 380 320" stroke="url(#orange)" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.12"/>
-    <path d="M120 340 Q160 270 200 340 Q240 410 280 340 Q320 270 360 340 Q400 410 440 340" stroke="url(#orange)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.08"/>
-  </g>
+  <!-- Sound waves -->
+  <path d="M140 320 Q170 260 200 320 Q230 380 260 320 Q290 260 320 320 Q350 380 380 320" stroke="#e86a2e" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.12"/>
 
-  <!-- Music note group -->
-  <g filter="url(#glow)">
-    <!-- Note head (ellipse, rotated) -->
-    <ellipse cx="220" cy="300" rx="38" ry="28" fill="url(#orange)" transform="rotate(-25 220 300)"/>
+  <!-- Music note head -->
+  <ellipse cx="220" cy="300" rx="38" ry="28" fill="#e86a2e" transform="rotate(-25 220 300)"/>
 
-    <!-- Stem -->
-    <rect x="254" y="160" width="10" height="145" rx="5" fill="url(#orange)"/>
+  <!-- Stem -->
+  <rect x="254" y="160" width="10" height="145" rx="5" fill="#e86a2e"/>
 
-    <!-- Flag -->
-    <path d="M264 160 Q320 185 310 230 Q300 200 264 195 Z" fill="url(#orange)"/>
-  </g>
+  <!-- Flag -->
+  <path d="M264 160 Q320 185 310 230 Q300 200 264 195 Z" fill="#e86a2e"/>
 
-  <!-- Play triangle (white) -->
-  <g opacity="0.92">
-    <polygon points="238,240 238,310 290,275" fill="white"/>
-  </g>
+  <!-- Play triangle -->
+  <polygon points="238,240 238,310 290,275" fill="white"/>
 </svg>
