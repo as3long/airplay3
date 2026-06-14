@@ -158,10 +158,21 @@ async function loadSavedPlaylist() {
       title: string; artist: string; album: string; duration: number; path: string
     }>
     for (const t of tracks) {
+      let { title, artist, album, duration } = t
+      if ((artist === 'Unknown Artist' || !artist) && t.path && !t.path.startsWith('data:') && !t.path.startsWith('blob:')) {
+        try {
+          const meta = await invoke<{
+            title: string | null; artist: string | null; album: string | null; duration: number
+          }>('read_audio_metadata', { filePath: t.path })
+          title = meta.title || title
+          artist = meta.artist || artist
+          album = meta.album || album
+          if (meta.duration > 0) duration = meta.duration
+        } catch { /* silent */ }
+      }
       playerStore.addToPlaylist({
         id: Date.now() + Math.random(),
-        title: t.title, artist: t.artist, album: t.album,
-        duration: t.duration, path: t.path,
+        title, artist, album, duration, path: t.path,
       })
     }
   } catch { /* silent */ }
