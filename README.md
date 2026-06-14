@@ -148,6 +148,10 @@ airplay3/
     └── *.mp3
 ```
 
+## Acknowledgments
+
+本项目使用 [MiMoCode](https://github.com/XiaomiMiMo/MiMo-Code) 辅助开发，感谢 MiMo 团队提供的免费 mimo-v2.5 模型 token。
+
 ## License
 
 MIT
