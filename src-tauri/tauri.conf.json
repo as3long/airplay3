@@ -24,11 +24,13 @@
         "label": "about",
         "title": "About AirPlay3",
         "width": 440,
-        "height": 520,
+        "height": 480,
         "decorations": true,
         "visible": false,
         "center": true,
-        "resizable": false
+        "resizable": false,
+        "minimizable": false,
+        "maximizable": false
       }
     ],
     "security": {

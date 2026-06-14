@@ -59,10 +59,12 @@ async function openAboutWindow() {
     url: 'about.html',
     title: 'About AirPlay3',
     width: 440,
-    height: 520,
+    height: 480,
     decorations: true,
     center: true,
     resizable: false,
+    minimizable: false,
+    maximizable: false,
   })
 }
 
