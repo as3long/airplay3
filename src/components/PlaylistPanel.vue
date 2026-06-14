@@ -94,19 +94,19 @@ function selectTrack(trackId: number) {
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border);
 }
 
 .playlist-title {
   font-size: 13px;
   font-weight: 600;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .add-btn {
   background: none;
   border: none;
-  color: #666;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
@@ -117,7 +117,7 @@ function selectTrack(trackId: number) {
 
 .add-btn:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #e86a2e;
+  color: var(--accent);
 }
 
 .playlist-list {
@@ -152,22 +152,23 @@ function selectTrack(trackId: number) {
 
 .empty-hint {
   font-size: 12px;
-  color: #555;
+  color: var(--text-tertiary);
 }
 
 .add-files-btn {
   padding: 6px 14px;
-  background: rgba(232, 106, 46, 0.15);
-  border: 1px solid rgba(232, 106, 46, 0.3);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent);
   border-radius: 6px;
-  color: #e86a2e;
+  color: var(--accent);
   font-size: 12px;
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .add-files-btn:hover {
-  background: rgba(232, 106, 46, 0.25);
+  background: var(--accent-bg);
+  filter: brightness(1.2);
 }
 
 .playlist-item {
@@ -185,15 +186,15 @@ function selectTrack(trackId: number) {
 }
 
 .playlist-item.active {
-  background: rgba(232, 106, 46, 0.1);
+  background: var(--accent-bg);
 }
 
 .playlist-item.active .item-title {
-  color: #e86a2e;
+  color: var(--accent);
 }
 
 .playlist-item.active .item-artist {
-  color: #e86a2e;
+  color: var(--accent);
   opacity: 0.7;
 }
 
@@ -207,20 +208,20 @@ function selectTrack(trackId: number) {
 }
 
 .item-title {
-  color: #ccc;
+  color: var(--text-primary);
 }
 
 .item-sep {
-  color: #555;
+  color: var(--text-tertiary);
 }
 
 .item-artist {
-  color: #777;
+  color: var(--text-secondary);
 }
 
 .item-duration {
   font-size: 11px;
-  color: #555;
+  color: var(--text-tertiary);
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
 }
@@ -229,7 +230,7 @@ function selectTrack(trackId: number) {
   opacity: 0;
   background: none;
   border: none;
-  color: #555;
+  color: var(--text-tertiary);
   cursor: pointer;
   padding: 2px;
   border-radius: 3px;
@@ -245,7 +246,7 @@ function selectTrack(trackId: number) {
 }
 
 .remove-btn:hover {
-  color: #e86a2e;
+  color: var(--accent);
   background: rgba(232, 106, 46, 0.15);
 }
 
@@ -254,8 +255,8 @@ function selectTrack(trackId: number) {
   align-items: center;
   justify-content: space-between;
   padding: 8px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--border);
   font-size: 11px;
-  color: #555;
+  color: var(--text-tertiary);
 }
 </style>

@@ -24,8 +24,8 @@ defineProps<{
 <style scoped>
 .context-menu {
   position: fixed;
-  background: #2a2a3a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 30, 40, 0.95);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 4px;
   min-width: 160px;
@@ -36,14 +36,14 @@ defineProps<{
 .menu-item {
   padding: 8px 14px;
   font-size: 13px;
-  color: #ccc;
+  color: var(--text-primary);
   cursor: pointer;
   border-radius: 4px;
   transition: background 0.1s;
 }
 
 .menu-item:hover {
-  background: rgba(232, 106, 46, 0.15);
-  color: #fff;
+  background: var(--accent-bg);
+  color: var(--text-primary);
 }
 </style>

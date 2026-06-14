@@ -7,6 +7,7 @@ import { WebviewWindow } from '@tauri-apps/api/webviewWindow'
 import { usePlayerStore } from './stores/player'
 import { eventBus, EVENTS } from './utils/eventBus'
 import { useEqualizer } from './composables/useEqualizer'
+import { useTheme } from './composables/useTheme'
 import type { Track } from './types/player'
 import TitleBar from './components/TitleBar.vue'
 import SongInfo from './components/SongInfo.vue'
@@ -21,6 +22,7 @@ import ContextMenu from './components/ContextMenu.vue'
 
 const playerStore = usePlayerStore()
 const eq = useEqualizer()
+const theme = useTheme()
 const isDragging = ref(false)
 let currentAudio: HTMLAudioElement | null = null
 const unlisteners: (() => void)[] = []
@@ -347,7 +349,7 @@ onUnmounted(() => {
 
 <template>
   <div class="app-container">
-    <TitleBar />
+    <TitleBar :theme-name="theme.currentThemeName.value" @toggle-theme="theme.toggleTheme" />
     <div class="main-content">
       <div v-show="isDragging" class="drop-overlay">
         <div class="drop-text">Drop audio files here</div>
@@ -396,23 +398,24 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 .app-container {
   width: 100vw; height: 100vh;
-  background: rgba(15, 15, 22, 0.9);
-  display: flex; flex-direction: column; color: #ccc;
+  background: var(--bg-main);
+  display: flex; flex-direction: column; color: var(--text-primary);
 }
 .main-content { flex: 1; display: flex; position: relative; overflow: hidden; }
 .left-panel { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: visible; }
 .controls-row { display: flex; justify-content: center; padding: 4px 0; }
-.divider { width: 1px; background: rgba(255,255,255,0.06); margin: 12px 0; }
-.panel { background: rgba(255,255,255,0.04); border-radius: 8px; }
+.divider { width: 1px; background: var(--border); margin: 12px 0; }
+.panel { background: var(--bg-panel); border-radius: 8px; }
 .drop-overlay {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(15,15,22,0.92);
-  border: 2px dashed rgba(232,106,46,0.6);
+  background: var(--bg-main);
+  border: 2px dashed var(--accent);
   border-radius: 12px; margin: 12px; z-index: 100;
   pointer-events: none;
+  opacity: 0.92;
 }
-.drop-text { font-size: 1.3rem; color: #e86a2e; font-weight: 600; }
+.drop-text { font-size: 1.3rem; color: var(--accent); font-weight: 600; }
 
 .eq-toggle-row {
   display: flex;
@@ -423,10 +426,10 @@ body {
 
 .eq-show-btn {
   padding: 4px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
   border-radius: 4px;
-  color: #888;
+  color: var(--text-secondary);
   font-size: 11px;
   cursor: pointer;
   transition: all 0.15s;
@@ -434,6 +437,6 @@ body {
 
 .eq-show-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--text-primary);
 }
 </style>

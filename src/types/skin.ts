@@ -14,9 +14,23 @@ export interface SkinComponents {
   [key: string]: ComponentPosition | undefined
 }
 
+export interface SkinColors {
+  accent: string
+  accentHover: string
+  accentBg: string
+  bgMain: string
+  bgTitlebar: string
+  bgPanel: string
+  textPrimary: string
+  textSecondary: string
+  textTertiary: string
+  border: string
+}
+
 export interface SkinConfig {
   name: string
   width: number
   height: number
   components: SkinComponents
+  colors?: SkinColors
 }

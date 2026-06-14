@@ -84,8 +84,10 @@ function selectPreset(p: typeof presets[0]) {
 
     <div class="eq-buttons">
       <button class="eq-btn" @click="resetBands">Reset</button>
-      <div class="preset-wrap">
-        <button class="eq-btn" @click="showPresets = !showPresets">Presets ▾</button>
+      <div class="eq-preset-wrapper">
+        <button class="eq-btn preset-btn" @click="showPresets = !showPresets">
+          Presets ▾
+        </button>
         <div v-if="showPresets" class="preset-dropdown">
           <button
             v-for="p in presets"
@@ -118,24 +120,24 @@ function selectPreset(p: typeof presets[0]) {
 .eq-title {
   font-size: 12px;
   font-weight: 600;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 .eq-toggle {
   padding: 3px 10px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 4px;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 10px;
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .eq-toggle.active {
-  background: rgba(232, 106, 46, 0.15);
-  border-color: rgba(232, 106, 46, 0.3);
-  color: #e86a2e;
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .eq-bands {
@@ -155,7 +157,7 @@ function selectPreset(p: typeof presets[0]) {
 
 .band-value {
   font-size: 9px;
-  color: #e86a2e;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
   min-height: 14px;
 }
@@ -179,25 +181,25 @@ function selectPreset(p: typeof presets[0]) {
   -webkit-appearance: none;
   width: 12px;
   height: 12px;
-  background: #e86a2e;
+  background: var(--accent);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 4px rgba(232, 106, 46, 0.4);
+  box-shadow: 0 0 4px var(--accent);
 }
 
 .eq-slider::-webkit-slider-thumb:hover {
-  background: #ff7a3d;
+  background: var(--accent-hover);
 }
 
 .band-label {
   font-size: 9px;
-  color: #888;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .band-unit {
   font-size: 7px;
-  color: #555;
+  color: var(--text-tertiary);
   margin-top: -2px;
 }
 
@@ -206,7 +208,7 @@ function selectPreset(p: typeof presets[0]) {
   justify-content: space-between;
   padding: 4px 8px 0;
   font-size: 8px;
-  color: #555;
+  color: var(--text-tertiary);
 }
 
 .eq-buttons {
@@ -217,12 +219,12 @@ function selectPreset(p: typeof presets[0]) {
 }
 
 .eq-btn {
+  padding: 4px 12px;
   height: 24px;
-  padding: 0 12px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 4px;
-  color: #888;
+  color: var(--text-secondary);
   font-size: 10px;
   cursor: pointer;
   transition: all 0.15s;
@@ -231,14 +233,16 @@ function selectPreset(p: typeof presets[0]) {
 
 .eq-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--text-primary);
 }
 
-.preset-wrap {
-  position: relative;
-  height: 24px;
+.preset-btn {
   display: flex;
   align-items: center;
+}
+
+.preset-wrapper {
+  position: relative;
 }
 
 .preset-dropdown {
@@ -247,7 +251,7 @@ function selectPreset(p: typeof presets[0]) {
   right: 0;
   margin-bottom: 4px;
   background: rgba(30, 30, 40, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 4px;
   min-width: 110px;
@@ -260,7 +264,7 @@ function selectPreset(p: typeof presets[0]) {
   padding: 5px 10px;
   background: none;
   border: none;
-  color: #aaa;
+  color: var(--text-secondary);
   font-size: 10px;
   text-align: left;
   cursor: pointer;
@@ -268,7 +272,7 @@ function selectPreset(p: typeof presets[0]) {
 }
 
 .preset-dropdown button:hover {
-  background: rgba(232, 106, 46, 0.15);
-  color: #e86a2e;
+  background: var(--accent-bg);
+  color: var(--accent);
 }
 </style>

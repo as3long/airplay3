@@ -123,7 +123,7 @@ function scrollToCurrent() {
 .lyric-line {
   padding: 8px 8px;
   font-size: 14px;
-  color: #666;
+  color: var(--text-tertiary);
   transition: all 0.3s ease;
   line-height: 1.6;
   border-radius: 4px;
@@ -131,14 +131,15 @@ function scrollToCurrent() {
 }
 
 .lyric-line.past {
-  color: #555;
+  color: var(--text-tertiary);
+  opacity: 0.7;
 }
 
 .lyric-line.active {
-  color: #e86a2e;
+  color: var(--accent);
   font-size: 18px;
   font-weight: 600;
-  background: rgba(232, 106, 46, 0.08);
+  background: var(--accent-bg);
 }
 
 .lyrics-loading {
@@ -148,15 +149,15 @@ function scrollToCurrent() {
   justify-content: center;
   height: 100%;
   gap: 8px;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 12px;
 }
 
 .spinner {
   width: 20px;
   height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #e86a2e;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -178,10 +179,11 @@ function scrollToCurrent() {
   width: 48px;
   height: 48px;
   margin-bottom: 12px;
+  color: var(--text-tertiary);
 }
 
 .empty-text {
   font-size: 13px;
-  color: #666;
+  color: var(--text-tertiary);
 }
 </style>

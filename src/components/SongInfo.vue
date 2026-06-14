@@ -66,17 +66,17 @@ function formatTime(seconds: number): string {
   justify-content: center;
   font-size: 24px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.2);
+  color: white;
 }
 
 .cover-placeholder.empty {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-panel);
 }
 
 .cover-placeholder.empty svg {
   width: 28px;
   height: 28px;
-  opacity: 0.4;
+  color: rgba(255, 255, 255, 0.2);
 }
 
 .song-text {
@@ -87,7 +87,7 @@ function formatTime(seconds: number): string {
 .song-title {
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -99,7 +99,7 @@ function formatTime(seconds: number): string {
 
 .song-artist {
   font-size: 12px;
-  color: #888;
+  color: var(--text-secondary);
   margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
@@ -112,7 +112,7 @@ function formatTime(seconds: number): string {
 
 .song-time {
   font-size: 12px;
-  color: #666;
+  color: var(--text-tertiary);
   margin-top: 4px;
   font-variant-numeric: tabular-nums;
 }

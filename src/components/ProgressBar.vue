@@ -55,7 +55,7 @@ function handleSeek(event: MouseEvent) {
 
 .progress-fill {
   height: 100%;
-  background: #e86a2e;
+  background: var(--accent);
   border-radius: 2px;
   transition: width 0.1s linear;
 }
@@ -64,7 +64,7 @@ function handleSeek(event: MouseEvent) {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #555;
+  color: var(--text-tertiary);
   margin-top: 4px;
   font-variant-numeric: tabular-nums;
 }

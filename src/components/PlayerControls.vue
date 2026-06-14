@@ -64,14 +64,14 @@ function toggleShuffle() {
 }
 .ctrl-btn {
   width: 32px; height: 32px; border: none; background: transparent;
-  color: #aaa; border-radius: 50%; display: flex; align-items: center;
+  color: var(--text-secondary); border-radius: 50%; display: flex; align-items: center;
   justify-content: center; cursor: pointer; transition: all 0.15s;
 }
-.ctrl-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
-.ctrl-btn.active { color: #e86a2e; }
+.ctrl-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+.ctrl-btn.active { color: var(--accent); }
 .play-btn {
   width: 44px; height: 44px;
-  background: rgba(232,106,46,0.15); color: #e86a2e;
+  background: var(--accent-bg); color: var(--accent);
 }
-.play-btn:hover { background: rgba(232,106,46,0.25); }
+.play-btn:hover { background: var(--accent-bg); filter: brightness(1.2); }
 </style>
