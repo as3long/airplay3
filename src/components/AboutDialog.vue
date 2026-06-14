@@ -3,12 +3,6 @@ defineEmits<{
   close: []
 }>()
 
-const appInfo = {
-  name: 'AirPlay3',
-  version: '0.1.1',
-  description: 'AirPlay 3 风格的 Windows 桌面音乐播放器',
-}
-
 const credits = [
   { name: 'Tauri', url: 'https://tauri.app', license: 'MIT/Apache-2.0', desc: '桌面应用框架' },
   { name: 'Vue.js', url: 'https://vuejs.org', license: 'MIT', desc: '前端 UI 框架' },
@@ -24,13 +18,13 @@ const credits = [
 
 <template>
   <div class="about-overlay" @click.self="$emit('close')">
-    <div class="about-dialog">
+    <div class="about-dialog" @click.stop>
       <div class="about-header">
         <div class="about-icon">♫</div>
-        <h2>{{ appInfo.name }}</h2>
-        <span class="about-version">v{{ appInfo.version }}</span>
+        <h2>AirPlay3</h2>
+        <span class="about-version">v0.1.3</span>
       </div>
-      <p class="about-desc">{{ appInfo.description }}</p>
+      <p class="about-desc">AirPlay 3 风格的 Windows 桌面音乐播放器</p>
 
       <div class="about-section">
         <h3>Open Source Components</h3>
@@ -56,7 +50,7 @@ const credits = [
 .about-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,21 +61,21 @@ const credits = [
   background: #1e1e2e;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 24px;
-  width: 420px;
-  max-height: 80vh;
+  padding: 20px;
+  width: 400px;
+  max-height: 460px;
   overflow-y: auto;
   color: #ccc;
 }
 
 .about-header {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .about-icon {
   font-size: 48px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .about-header h2 {
@@ -99,7 +93,7 @@ const credits = [
   text-align: center;
   font-size: 13px;
   color: #888;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .about-section h3 {
@@ -107,17 +101,17 @@ const credits = [
   color: #e86a2e;
   margin-bottom: 8px;
   padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid #e86a2e;
 }
 
 .credits-list {
-  max-height: 240px;
+  max-height: 260px;
   overflow-y: auto;
 }
 
 .credit-item {
   padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .credit-name {
@@ -153,7 +147,7 @@ const credits = [
 
 .about-footer {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .about-btn {

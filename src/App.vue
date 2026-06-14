@@ -17,6 +17,7 @@ import VolumeControl from './components/VolumeControl.vue'
 import PlaylistPanel from './components/PlaylistPanel.vue'
 import OnlineMusic from './components/OnlineMusic.vue'
 import ContextMenu from './components/ContextMenu.vue'
+import AboutDialog from './components/AboutDialog.vue'
 
 const playerStore = usePlayerStore()
 const eq = useEqualizer()
@@ -34,6 +35,7 @@ const showOnline = ref(false)
 const showContextMenu = ref(false)
 const contextMenuX = ref(0)
 const contextMenuY = ref(0)
+const showAbout = ref(false)
 
 function onContextMenu(e: MouseEvent) {
   e.preventDefault()
@@ -46,11 +48,9 @@ function closeContextMenu() {
   showContextMenu.value = false
 }
 
-async function openAboutWindow() {
+function openAboutWindow() {
   showContextMenu.value = false
-  const isDev = location.hostname === 'localhost'
-  const url = isDev ? 'http://localhost:5173/about.html' : 'about.html'
-  window.open(url, 'about', 'width=440,height=500,resizable=no,menubar=no,toolbar=no')
+  showAbout.value = true
 }
 
 async function openFilePicker() {
@@ -354,6 +354,7 @@ onUnmounted(() => {
       <PlaylistPanel @add-files="openFilePicker" @remove-track="handleRemoveTrack" />
     </div>
     <ContextMenu :visible="showContextMenu" :x="contextMenuX" :y="contextMenuY" @about="openAboutWindow" />
+    <AboutDialog v-if="showAbout" @close="showAbout = false" />
   </div>
 </template>
 
