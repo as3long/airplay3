@@ -16,6 +16,8 @@ import ProgressBar from './components/ProgressBar.vue'
 import VolumeControl from './components/VolumeControl.vue'
 import PlaylistPanel from './components/PlaylistPanel.vue'
 import OnlineMusic from './components/OnlineMusic.vue'
+import ContextMenu from './components/ContextMenu.vue'
+import AboutDialog from './components/AboutDialog.vue'
 
 const playerStore = usePlayerStore()
 const eq = useEqualizer()
@@ -30,6 +32,21 @@ const eqBands = computed(() => eq.gains.value)
 const eqEnabled = computed(() => eq.enabled.value)
 const eqVisible = computed(() => eq.visible.value)
 const showOnline = ref(false)
+const showContextMenu = ref(false)
+const contextMenuX = ref(0)
+const contextMenuY = ref(0)
+const showAbout = ref(false)
+
+function onContextMenu(e: MouseEvent) {
+  e.preventDefault()
+  contextMenuX.value = e.clientX
+  contextMenuY.value = e.clientY
+  showContextMenu.value = true
+}
+
+function closeContextMenu() {
+  showContextMenu.value = false
+}
 
 async function openFilePicker() {
   const selected = await open({
@@ -273,6 +290,8 @@ async function loadPlayerState() {
 onMounted(async () => {
   eventBus.on(EVENTS.PLAY_TRACK, onPlayTrack)
   eventBus.on(EVENTS.TOGGLE_PLAY, onTogglePlay)
+  document.addEventListener('contextmenu', onContextMenu)
+  document.addEventListener('click', closeContextMenu)
   if (!initialized) {
     ;(window as unknown as Record<string, unknown>).__airplay3_loaded = true
     await loadSavedVolume()
@@ -286,6 +305,8 @@ onMounted(async () => {
 onUnmounted(() => {
   eventBus.off(EVENTS.PLAY_TRACK, onPlayTrack)
   eventBus.off(EVENTS.TOGGLE_PLAY, onTogglePlay)
+  document.removeEventListener('contextmenu', onContextMenu)
+  document.removeEventListener('click', closeContextMenu)
   unlisteners.forEach((fn) => fn())
   eq.destroy()
   if (currentAudio) currentAudio.pause()
@@ -327,6 +348,8 @@ onUnmounted(() => {
       <div class="divider"></div>
       <PlaylistPanel @add-files="openFilePicker" @remove-track="handleRemoveTrack" />
     </div>
+    <ContextMenu :visible="showContextMenu" :x="contextMenuX" :y="contextMenuY" @about="showAbout = true; showContextMenu = false" />
+    <AboutDialog v-if="showAbout" @close="showAbout = false" />
   </div>
 </template>
 
