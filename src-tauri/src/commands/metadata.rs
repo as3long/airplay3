@@ -32,10 +32,7 @@ pub fn read_audio_metadata(file_path: String) -> Result<AudioMetadata, String> {
         return Err(format!("File not found: {}", file_path));
     }
 
-    let file_name = path
-        .file_stem()
-        .and_then(|s| s.to_str())
-        .unwrap_or("");
+    let file_name = path.file_stem().and_then(|s| s.to_str()).unwrap_or("");
     let (file_title, file_artist) = parse_filename(file_name);
 
     let tagged_file = lofty::read_from_path(path).ok();
