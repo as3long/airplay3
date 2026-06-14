@@ -3,6 +3,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
 import { open } from '@tauri-apps/plugin-dialog'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow'
 import { usePlayerStore } from './stores/player'
 import { eventBus, EVENTS } from './utils/eventBus'
 import { useEqualizer } from './composables/useEqualizer'
@@ -17,7 +18,6 @@ import VolumeControl from './components/VolumeControl.vue'
 import PlaylistPanel from './components/PlaylistPanel.vue'
 import OnlineMusic from './components/OnlineMusic.vue'
 import ContextMenu from './components/ContextMenu.vue'
-import AboutDialog from './components/AboutDialog.vue'
 
 const playerStore = usePlayerStore()
 const eq = useEqualizer()
@@ -35,7 +35,6 @@ const showOnline = ref(false)
 const showContextMenu = ref(false)
 const contextMenuX = ref(0)
 const contextMenuY = ref(0)
-const showAbout = ref(false)
 
 function onContextMenu(e: MouseEvent) {
   e.preventDefault()
@@ -48,9 +47,25 @@ function closeContextMenu() {
   showContextMenu.value = false
 }
 
-function openAboutWindow() {
+async function openAboutWindow() {
   showContextMenu.value = false
-  showAbout.value = true
+  const existing = await WebviewWindow.getByLabel('about')
+  if (existing) {
+    await existing.show()
+    await existing.setFocus()
+    return
+  }
+  new WebviewWindow('about', {
+    url: '/about.html',
+    title: 'About AirPlay3',
+    width: 440,
+    height: 500,
+    decorations: true,
+    center: true,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+  })
 }
 
 async function openFilePicker() {
@@ -354,7 +369,6 @@ onUnmounted(() => {
       <PlaylistPanel @add-files="openFilePicker" @remove-track="handleRemoveTrack" />
     </div>
     <ContextMenu :visible="showContextMenu" :x="contextMenuX" :y="contextMenuY" @about="openAboutWindow" />
-    <AboutDialog v-if="showAbout" @close="showAbout = false" />
   </div>
 </template>
 
