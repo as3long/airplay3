@@ -3,6 +3,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
 import { open } from '@tauri-apps/plugin-dialog'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow'
 import { usePlayerStore } from './stores/player'
 import { eventBus, EVENTS } from './utils/eventBus'
 import { useEqualizer } from './composables/useEqualizer'
@@ -17,7 +18,6 @@ import VolumeControl from './components/VolumeControl.vue'
 import PlaylistPanel from './components/PlaylistPanel.vue'
 import OnlineMusic from './components/OnlineMusic.vue'
 import ContextMenu from './components/ContextMenu.vue'
-import AboutDialog from './components/AboutDialog.vue'
 
 const playerStore = usePlayerStore()
 const eq = useEqualizer()
@@ -35,7 +35,6 @@ const showOnline = ref(false)
 const showContextMenu = ref(false)
 const contextMenuX = ref(0)
 const contextMenuY = ref(0)
-const showAbout = ref(false)
 
 function onContextMenu(e: MouseEvent) {
   e.preventDefault()
@@ -46,6 +45,25 @@ function onContextMenu(e: MouseEvent) {
 
 function closeContextMenu() {
   showContextMenu.value = false
+}
+
+async function openAboutWindow() {
+  showContextMenu.value = false
+  const existing = await WebviewWindow.getByLabel('about')
+  if (existing) {
+    await existing.show()
+    await existing.setFocus()
+    return
+  }
+  new WebviewWindow('about', {
+    url: '#/about',
+    title: 'About AirPlay3',
+    width: 440,
+    height: 520,
+    decorations: true,
+    center: true,
+    resizable: false,
+  })
 }
 
 async function openFilePicker() {
@@ -348,8 +366,7 @@ onUnmounted(() => {
       <div class="divider"></div>
       <PlaylistPanel @add-files="openFilePicker" @remove-track="handleRemoveTrack" />
     </div>
-    <ContextMenu :visible="showContextMenu" :x="contextMenuX" :y="contextMenuY" @about="showAbout = true; showContextMenu = false" />
-    <AboutDialog v-if="showAbout" @close="showAbout = false" />
+    <ContextMenu :visible="showContextMenu" :x="contextMenuX" :y="contextMenuY" @about="openAboutWindow" />
   </div>
 </template>
 
@@ -359,6 +376,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: transparent; overflow: hidden; user-select: none;
 }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 .app-container {
   width: 100vw; height: 100vh;
   background: rgba(15, 15, 22, 0.9);
