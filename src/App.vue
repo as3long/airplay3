@@ -55,11 +55,13 @@ async function openAboutWindow() {
     await existing.setFocus()
     return
   }
+  const isDev = location.hostname === 'localhost'
+  const url = isDev ? 'http://localhost:5173/about.html' : 'about.html'
   new WebviewWindow('about', {
-    url: 'about.html',
+    url,
     title: 'About AirPlay3',
     width: 440,
-    height: 480,
+    height: 500,
     decorations: true,
     center: true,
     resizable: false,
