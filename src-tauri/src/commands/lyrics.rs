@@ -39,7 +39,7 @@ pub async fn fetch_lyrics(
     if cache_file.exists() {
         if let Ok(json) = fs::read_to_string(&cache_file) {
             if let Ok(cached) = serde_json::from_str::<LyricsResult>(&json) {
-                if cached.plain.len() > 0 || cached.synced.is_some() {
+                if !cached.plain.is_empty() || cached.synced.is_some() {
                     return Ok(cached);
                 }
             }
@@ -53,7 +53,7 @@ pub async fn fetch_lyrics(
         result.synced = Some(t2s(s));
     }
 
-    if result.plain.len() > 0 || result.synced.is_some() {
+    if !result.plain.is_empty() || result.synced.is_some() {
         let json = serde_json::to_string_pretty(&result).map_err(|e| e.to_string())?;
         let _ = fs::write(&cache_file, json);
     }

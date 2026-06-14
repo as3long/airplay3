@@ -1,5 +1,4 @@
 use lofty::file::{AudioFile, TaggedFileExt};
-use lofty::tag::TagExt;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
