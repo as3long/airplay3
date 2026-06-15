@@ -82,7 +82,7 @@ jobs:
           - os: windows-latest
             target: windows
             platform: windows-x86_64
-          - os: macos-latest
+          - os: macos-13
             target: macos
             platform: macos-x86_64
     runs-on: ${{ matrix.os }}
