@@ -84,10 +84,10 @@ jobs:
             platform: windows-x86_64
           - os: macos-latest
             target: macos-arm64
-            args: --target aarch64-apple-darwin
+            args: --bundles dmg --target aarch64-apple-darwin
           - os: macos-latest
             target: macos-x86_64
-            args: --target x86_64-apple-darwin
+            args: --bundles dmg --target x86_64-apple-darwin
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -127,7 +127,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build Tauri app
-        run: pnpm tauri build --bundles dmg ${{ matrix.args }}
+        run: pnpm tauri build ${{ matrix.args }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
