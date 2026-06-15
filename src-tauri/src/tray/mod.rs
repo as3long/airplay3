@@ -10,11 +10,10 @@ pub fn create_tray(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Err
         .icon(app.default_window_icon().unwrap().clone())
         .menu(&menu)
         .show_menu_on_left_click(true)
-        .on_menu_event(move |app, event| match event.id.as_ref() {
-            "quit" => {
+        .on_menu_event(move |app, event| {
+            if event.id.as_ref() == "quit" {
                 app.exit(0);
             }
-            _ => {}
         })
         .build(app)?;
 
